@@ -1,23 +1,45 @@
 const express = require('express');
 const Model = require('../model/admins');
+const multer = require('multer')
+const upload = require('../middleware/upload');
+const test = require('../middleware/upload');
 const router = express.Router()
 
 
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, '/uploads')
+    },
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      cb(null, file.fieldname + '-' + uniqueSuffix)
+    }
+  })
+  
+
 //Post Method
-router.post('/', async (req, res) => {
+router.post('/', upload.single('file'), async (req, res) => {
+
     const data = new Model({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
-        email: req.body.email
+        email: req.body.email,
+        file: req.file.filename
+        //file: upload.storage.filename
+        //avatar: req.file.path
+        
     })
     try {
         const newData = await data.save() 
-        res.status(201).json(newData) // 201 to tell something was created
+        res.status(201).json(newData)// 201 to tell something was created
+
     } catch (error) {
         res.status(400).json({message: error.message})
         
     }
 })
+
 
 //Get all Method
 router.get('/', async (req, res) => {

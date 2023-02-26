@@ -36,6 +36,9 @@ app.use('/admins', adminsAPI)
 
 
 
+
+
+
 app.get("/", function(req, res){ //request, response
     res.send("<h1>Server is Running:)</h1>");
 })

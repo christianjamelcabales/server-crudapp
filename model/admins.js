@@ -14,6 +14,10 @@ const dataSchema = new mongoose.Schema({
         required: true,
         type: String
     },
+    file:{
+        required: false,
+        type: String
+    }
 },{
     collection: 'admins'
 })
