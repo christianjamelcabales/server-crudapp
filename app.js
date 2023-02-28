@@ -29,6 +29,10 @@ app.use('/customers', customersAPI)
 const adminsAPI = require('./routes/admins-api')
 app.use('/admins', adminsAPI)
 
+const uploadsAPI = require('./routes/admins-api')
+app.use('/admins/upload', uploadsAPI)
+
+app.use(express.static('public'));
 
 
 
